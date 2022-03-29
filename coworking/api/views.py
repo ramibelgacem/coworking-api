@@ -2,8 +2,33 @@ from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+from base.generics import ActivateAPIView, DesactivateAPIView
 from management.models import Company, Employee, Equipment
-from api.serializers import CompanySerializer, EmployeeSerializer, EquipmentSerializer
+from api.serializers import (
+    CompanySerializer,
+    CompanyActiveSerializer,
+    EmployeeSerializer,
+    EmployeeActiveSerializer,
+    EquipmentSerializer
+)
+
+
+class CompanyActivate(ActivateAPIView):
+    """
+    Activate a company
+    """
+
+    queryset = Company.objects.all()
+    serializer_class = CompanyActiveSerializer
+
+
+class CompanyDesactivate(DesactivateAPIView):
+    """
+    Desactivate a company
+    """
+
+    queryset = Company.objects.all()
+    serializer_class = CompanyActiveSerializer
 
 
 class CompanyList(generics.ListCreateAPIView):
@@ -22,6 +47,24 @@ class CompanyDetail(generics.RetrieveUpdateDestroyAPIView):
 
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+
+
+class EmployeeActivate(ActivateAPIView):
+    """
+    Activate a employee
+    """
+
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeActiveSerializer
+
+
+class EmployeeDesactivate(DesactivateAPIView):
+    """
+    Desactivate a employee
+    """
+
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeActiveSerializer
 
 
 class EmployeeList(generics.ListCreateAPIView):
