@@ -15,7 +15,7 @@ from api.serializers import (
 
 class CompanyActivate(ActivateAPIView):
     """
-    Activate a company
+    Activate a company APIView
     """
 
     queryset = Company.objects.all()
@@ -24,7 +24,7 @@ class CompanyActivate(ActivateAPIView):
 
 class CompanyDesactivate(DesactivateAPIView):
     """
-    Desactivate a company
+    Desactivate a company APIView
     """
 
     queryset = Company.objects.all()
@@ -51,7 +51,7 @@ class CompanyDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class EmployeeActivate(ActivateAPIView):
     """
-    Activate a employee
+    Activate a employee APIView
     """
 
     queryset = Employee.objects.all()
@@ -60,7 +60,7 @@ class EmployeeActivate(ActivateAPIView):
 
 class EmployeeDesactivate(DesactivateAPIView):
     """
-    Desactivate a employee
+    Desactivate a employee APIView
     """
 
     queryset = Employee.objects.all()

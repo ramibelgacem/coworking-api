@@ -39,7 +39,7 @@ class CompanyTests(APITestCase):
 
     def test_list(self):
         """
-        Ensure we can get companies from database.
+        Ensure we can get companies.
         """
         Company.objects.create(**self.company_data)
         response = self.client.get(self.url_list)
@@ -48,7 +48,7 @@ class CompanyTests(APITestCase):
 
     def test_get_company_detail(self):
         """
-        Ensure we can get company details
+        Ensure we can get a company details
         """
         company = Company.objects.create(**self.company_data)
         url = reverse(self.url_detail, args=(company.id,))
@@ -80,7 +80,7 @@ class EmployeeTests(APITestCase):
 
     def test_toggle_employee(self):
         """
-        Ensure we can activate and desactivate a employee.
+        Ensure we can activate and desactivate an employee.
         """
         company = Company.objects.create(**self.company_data)
         self.employee_data.update({'company': company})
@@ -121,6 +121,9 @@ class EquipmentTests(APITestCase):
     }
 
     def test_employee_equipment_assign(self):
+        """
+        Ensure we can assign an equipment to an employee
+        """
         company = Company.objects.create(**self.company_data)
         self.employee_data1.update({'company': company})
         employee = Employee.objects.create(**self.employee_data1)
@@ -136,6 +139,9 @@ class EquipmentTests(APITestCase):
         self.assertEqual(equipment.employee, employee)
 
     def test_employee_equipment_revoke(self):
+        """
+        Ensure we can revoke an equipment from an employee
+        """
         company = Company.objects.create(**self.company_data)
         self.employee_data1.update({'company': company})
         employee = Employee.objects.create(**self.employee_data1)
@@ -155,6 +161,9 @@ class EquipmentTests(APITestCase):
         self.assertEqual(equipment.employee, None)
 
     def test_employee_equipment_revoke_all(self):
+        """
+        Ensure we can revoke all employee's equipments
+        """
         company = Company.objects.create(**self.company_data)
         self.employee_data1.update({'company': company})
         employee = Employee.objects.create(**self.employee_data1)
@@ -181,6 +190,9 @@ class EquipmentTests(APITestCase):
         self.assertEqual(employee.equipments.count(), 0)
 
     def test_employee_equipment_list(self):
+        """
+        Ensure we can get all equipments of an employee
+        """
         company = Company.objects.create(**self.company_data)
         self.employee_data1.update({'company': company})
         employee = Employee.objects.create(**self.employee_data1)

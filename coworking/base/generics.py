@@ -31,7 +31,7 @@ class DesactivateModelMixin(mixins.UpdateModelMixin):
 
 class DesactivateAPIView(DesactivateModelMixin, generics.GenericAPIView):
     """
-    Concrete view for activating a model instance.
+    Concrete view for desactivating a model instance.
     """
     def get(self, request, *args, **kwargs):
         return self.desactivate(request, *args, **kwargs)
