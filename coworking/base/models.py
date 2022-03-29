@@ -11,18 +11,18 @@ class TrackTimeModel(models.Model):
 
 
 class TypeOfEquipment(models.TextChoices):
-        PC = 'pc', 'PC'
-        SCREEN = 'screen', 'Screen'
+    PC = 'pc', 'PC'
+    SCREEN = 'screen', 'Screen'
 
 
 class EmployeeRole(models.TextChoices):
-        INTERN = 'intern', 'Intern'
-        DEV = 'dev', 'Dev'
-        TECHLEAD = 'techlead', 'TechLead'
-        IT = 'it', 'IT'
-        CTO = 'cto', 'CTO'
+    INTERN = 'intern', 'Intern'
+    DEV = 'dev', 'Dev'
+    TECHLEAD = 'techlead', 'TechLead'
+    IT = 'it', 'IT'
+    CTO = 'cto', 'CTO'
 
 
 class EquipmentStatus(models.TextChoices):
-        FREE = 'free', 'Free'
-        USED = 'used', 'Used'
+    FREE = 'free', 'Free'
+    USED = 'used', 'Used'

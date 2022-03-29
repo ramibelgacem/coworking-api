@@ -2,13 +2,13 @@ import uuid
 
 from django.db import models
 
-from management.base_model import (
+from base.models import (
     EmployeeRole,
     EquipmentStatus,
     TrackTimeModel,
     TypeOfEquipment
 )
-from management.validators import InternRuleValidator, DevRuleValidator, TechLeadRuleValidator
+from base.validators import InternRuleValidator, DevRuleValidator, TechLeadRuleValidator
 
 
 class Company(TrackTimeModel):
@@ -18,6 +18,7 @@ class Company(TrackTimeModel):
 
     def __str__(self):
         return self.name
+
 
 class Employee(TrackTimeModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -83,7 +84,7 @@ class Equipment(TrackTimeModel):
         if employee.role == EmployeeRole.TECHLEAD:
             if not TechLeadRuleValidator(employee, self).is_valid():
                 raise ValueError('A tech lead must have a minimum 32go of memory or 512go of hard disk')
-    
+
     def assign(self, employee):
         if self.status == EquipmentStatus.USED:
             raise ValueError('You can not assign this equipment, it is already used!')
