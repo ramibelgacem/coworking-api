@@ -36,6 +36,11 @@ class Employee(TrackTimeModel):
     def __str__(self):
         return self.name + ' ' + self.surname
 
+    def save(self, *args, **kwargs):
+        if not self.company.active:
+            raise ValueError("The company of the new employee must be active")
+        super().save(*args, **kwargs)
+
     def revoke_all(self):
         self.equipments.update(status=EquipmentStatus.FREE, employee=None)
 
@@ -88,6 +93,8 @@ class Equipment(TrackTimeModel):
     def assign(self, employee):
         if self.status == EquipmentStatus.USED:
             raise ValueError('You can not assign this equipment, it is already used!')
+        if not employee.active:
+            raise ValueError('You can not assign this equipment to an inactive employee')
 
         self.is_valid_assignment(employee)
 
