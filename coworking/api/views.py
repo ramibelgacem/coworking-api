@@ -65,7 +65,7 @@ def employee_equipment_list(request, employee_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view(['PATCH'])
+@api_view(['POST'])
 def assign_equipment(request, pk, employee_id):
     """
     Assign an equipment to an employee
@@ -84,7 +84,7 @@ def assign_equipment(request, pk, employee_id):
     return Response(status=status.HTTP_200_OK)
 
 
-@api_view(['PATCH'])
+@api_view(['POST'])
 def revoke_equipment(request, pk, employee_id):
     """
     Revoke an equipment from an employee
@@ -109,7 +109,7 @@ def revoke_equipment(request, pk, employee_id):
     return Response(status=status.HTTP_200_OK)
 
 
-@api_view(['PATCH'])
+@api_view(['POST'])
 def revoke_all(request, employee_id):
     """
     Revoke all employee's equipment

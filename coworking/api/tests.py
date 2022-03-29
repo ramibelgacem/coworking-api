@@ -80,8 +80,9 @@ class EquipmentTests(APITestCase):
         equipment = Equipment.objects.create(**self.equipment_data1)
         self.assertEqual(equipment.employee, None)
 
-        url = reverse('employee-equipment-assign', args=(equipment.id, employee.id))
-        response = self.client.patch(url)
+        response = self.client.post(
+            reverse('employee-equipment-assign', args=(equipment.id, employee.id))
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         equipment = Equipment.objects.get(pk=equipment.id)
@@ -94,11 +95,13 @@ class EquipmentTests(APITestCase):
         equipment = Equipment.objects.create(**self.equipment_data1)
         self.assertEqual(equipment.employee, None)
 
-        url = reverse('employee-equipment-assign', args=(equipment.id, employee.id))
-        self.client.patch(url)
+        self.client.post(
+            reverse('employee-equipment-assign', args=(equipment.id, employee.id))
+        )
 
-        url = reverse('employee-equipment-revoke', args=(equipment.id, employee.id))
-        response = self.client.patch(url)
+        response = self.client.post(
+            reverse('employee-equipment-revoke', args=(equipment.id, employee.id))
+        )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         equipment = Equipment.objects.get(pk=equipment.id)
@@ -112,17 +115,17 @@ class EquipmentTests(APITestCase):
         equipment2 = Equipment.objects.create(**self.equipment_data2)
         self.assertEqual(employee.equipments.count(), 0)
 
-        self.client.patch(
+        self.client.post(
             reverse('employee-equipment-assign', args=(equipment1.id, employee.id))
         )
-        self.client.patch(
+        self.client.post(
             reverse('employee-equipment-assign', args=(equipment2.id, employee.id))
         )
 
         employee = Employee.objects.get(pk=employee.id)
         self.assertEqual(employee.equipments.count(), 2)
 
-        response = self.client.patch(
+        response = self.client.post(
             reverse('employee-equipment-revoke-all', args=(employee.id,))
         )
 
@@ -137,10 +140,10 @@ class EquipmentTests(APITestCase):
         equipment1 = Equipment.objects.create(**self.equipment_data1)
         equipment2 = Equipment.objects.create(**self.equipment_data2)
 
-        self.client.patch(
+        self.client.post(
             reverse('employee-equipment-assign', args=(equipment1.id, employee.id))
         )
-        self.client.patch(
+        self.client.post(
             reverse('employee-equipment-assign', args=(equipment2.id, employee.id))
         )
 
