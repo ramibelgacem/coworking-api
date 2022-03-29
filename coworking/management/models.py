@@ -34,7 +34,7 @@ class Employee(TrackTimeModel):
         ]
 
     def __str__(self):
-        return self.name + ' ' + self.surname
+        return ' '.join([self.name, self.surname])
 
     def save(self, *args, **kwargs):
         if not self.company.active:
@@ -77,7 +77,7 @@ class Equipment(TrackTimeModel):
         ]
 
     def __str__(self):
-        return self.equipment_type + ' ' + self.model
+        return ' '.join([self.equipment_type, self.model])
 
     def is_valid_assignment(self, employee):
         if employee.role == EmployeeRole.INTERN:
