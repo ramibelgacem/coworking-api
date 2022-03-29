@@ -62,7 +62,7 @@ def employee_equipment_list(request, employee_id):
 
     equipments = employee.equipments
     serializer = EquipmentSerializer(equipments, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['PATCH'])

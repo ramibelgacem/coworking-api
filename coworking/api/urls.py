@@ -5,14 +5,14 @@ from api import views
 
 
 router = DefaultRouter()
-router.register(r'equipment', views.EquipmentViewSet, basename="equipment")
+router.register(r'', views.EquipmentViewSet, basename="equipment")
 
 urlpatterns = [
-    path('company/', views.CompanyList.as_view()),
-    path('company/<uuid:pk>/', views.CompanyDetail.as_view()),
-    path('employee/', views.EmployeeList.as_view()),
-    path('employee/<uuid:pk>/', views.EmployeeDetail.as_view()),
-    path('', include(router.urls)),
+    path('company/', views.CompanyList.as_view(), name='company-list'),
+    path('company/<uuid:pk>/', views.CompanyDetail.as_view(), name='company-detail'),
+    path('employee/', views.EmployeeList.as_view(), name='employee-list'),
+    path('employee/<uuid:pk>/', views.EmployeeDetail.as_view(), name='employee-detail'),
+    path('equipment/', include(router.urls)),
     path('equipment/<uuid:employee_id>/list/', views.employee_equipment_list, name='employee-equipment-list'),
     path('equipment/<uuid:pk>/<uuid:employee_id>/assign/', views.assign_equipment, name='employee-equipment-assign'),
     path('equipment/<uuid:pk>/<uuid:employee_id>/revoke/', views.revoke_equipment, name='employee-equipment-revoke'),
