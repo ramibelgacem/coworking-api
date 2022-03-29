@@ -18,6 +18,24 @@ class CompanyTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Company.objects.count(), 1)
         self.assertEqual(Company.objects.get().name, 'LtuTech')
+        self.assertEqual(Company.objects.get().active, False)
+
+    def test_toggle_company(self):
+        """
+        Ensure we can activate and desactivate a company.
+        """
+        Company.objects.create(**self.company_data)
+        self.assertEqual(Company.objects.get().active, False)
+
+        self.client.get(
+            reverse('company-activate', args=(Company.objects.get().id,))
+        )
+        self.assertEqual(Company.objects.get().active, True)
+
+        self.client.get(
+            reverse('company-desactivate', args=(Company.objects.get().id,))
+        )
+        self.assertEqual(Company.objects.get().active, False)
 
     def test_list(self):
         """
@@ -49,6 +67,35 @@ class CompanyTests(APITestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Company.objects.count(), 0)
+
+
+class EmployeeTests(APITestCase):
+    company_data = {'name': 'LtuTech', 'active': True}
+    employee_data = {
+        "name": "Rami",
+        "surname": "Belgacem",
+        "active": False,
+        "role": "intern",
+    }
+
+    def test_toggle_employee(self):
+        """
+        Ensure we can activate and desactivate a employee.
+        """
+        company = Company.objects.create(**self.company_data)
+        self.employee_data.update({'company': company})
+        Employee.objects.create(**self.employee_data)
+        self.assertEqual(Employee.objects.get().active, False)
+
+        self.client.get(
+            reverse('employee-activate', args=(Employee.objects.get().id,))
+        )
+        self.assertEqual(Employee.objects.get().active, True)
+
+        self.client.get(
+            reverse('employee-desactivate', args=(Employee.objects.get().id,))
+        )
+        self.assertEqual(Employee.objects.get().active, False)
 
 
 class EquipmentTests(APITestCase):
