@@ -21,4 +21,6 @@ urlpatterns = [
     path('equipment/<uuid:pk>/<uuid:employee_id>/assign/', views.assign_equipment, name='employee-equipment-assign'),
     path('equipment/<uuid:pk>/<uuid:employee_id>/revoke/', views.revoke_equipment, name='employee-equipment-revoke'),
     path('equipment/<uuid:employee_id>/revoke-all/', views.revoke_all, name='employee-equipment-revoke-all'),
+    path('employee/last-year/', views.employees_lastyear, name='employee-last-year'),
+    path('employee/<int:start_year>/<int:end_year>/', views.employee_period, name='employee-in-period'),
 ]
