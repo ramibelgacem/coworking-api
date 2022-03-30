@@ -173,6 +173,9 @@ def revoke_all(request, employee_id):
 
 @api_view(['GET'])
 def employees_lastyear(request):
+    """
+    List tech lead employees joined in the last year
+    """
     today = datetime.combine(date.today(), datetime.min.time())
 
     same_day_last_year = today - relativedelta(years=1)
@@ -187,6 +190,9 @@ def employees_lastyear(request):
 
 @api_view(['GET'])
 def employee_period(request, start_year, end_year):
+    """
+    List interns that joined between two given dates
+    """
     start_year = datetime(start_year, 1, 1)
     end_year = datetime(end_year, 12, 31)
 
