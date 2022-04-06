@@ -1,7 +1,12 @@
+import datetime
+import pytz
+from unittest import mock
+
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from base.models import EmployeeRole
 from management.models import Company, Employee, Equipment
 
 
@@ -104,7 +109,19 @@ class EquipmentTests(APITestCase):
         "name": "Rami",
         "surname": "Belgacem",
         "active": True,
-        "role": "intern",
+        "role": EmployeeRole.INTERN,
+    }
+    employee_data2 = {
+        "name": "Philippe",
+        "surname": "Richard",
+        "active": True,
+        "role": EmployeeRole.TECHLEAD,
+    }
+    employee_data3 = {
+        "name": "Sarah",
+        "surname": "Marcu",
+        "active": True,
+        "role": EmployeeRole.TECHLEAD,
     }
     equipment_data1 = {
         "equipment_type": "screen",
@@ -211,3 +228,23 @@ class EquipmentTests(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.json()), 2)
+
+    def test_employees_lastyear(self):
+        """
+        Ensure we can get only employees of the last year
+        """
+        company = Company.objects.create(**self.company_data)
+        self.employee_data2.update({'company': company})
+        employee2 = Employee.objects.create(**self.employee_data2)
+
+        mocked = datetime.datetime(2018, 1, 1, tzinfo=pytz.utc)
+        with mock.patch('django.utils.timezone.now', mock.Mock(return_value=mocked)):
+            self.employee_data3.update({'company': company})
+            employee3 = Employee.objects.create(**self.employee_data3)
+            self.assertEqual(employee3.created_at, mocked)
+
+        response = self.client.get(reverse('employee-last-year'))
+        self.assertEqual(len(response.json()), 1)
+        data = response.json()
+        self.assertEqual(data[0]['name'], "Philippe")
+        self.assertEqual(data[0]['surname'], "Richard")
