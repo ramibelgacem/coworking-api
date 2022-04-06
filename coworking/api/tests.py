@@ -246,5 +246,5 @@ class EquipmentTests(APITestCase):
         response = self.client.get(reverse('employee-last-year'))
         self.assertEqual(len(response.json()), 1)
         data = response.json()
-        self.assertEqual(data[0]['name'], "Philippe")
-        self.assertEqual(data[0]['surname'], "Richard")
+        self.assertEqual(data[0]['name'], employee2.name)
+        self.assertEqual(data[0]['surname'], employee2.surname)
